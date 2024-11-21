@@ -21,7 +21,6 @@ function generateOTP() {
 
 router.post("/create-user", async(req, res, next) => {
 
-    
     const createUser = async(newuser) => {
         const user = new User(newuser);
         await user.save();
@@ -32,7 +31,6 @@ router.post("/create-user", async(req, res, next) => {
     }
     try {
         const newUser = req.body;
-        console.log("rr", req.body)
         // Check if the email is already in use
         const existingUserByEmail = await User.findOne({ email: newUser.email });
         if (existingUserByEmail) {
@@ -49,7 +47,6 @@ router.post("/create-user", async(req, res, next) => {
                 message: 'The username is already taken',
             });
         }
-
         if(newUser.accountType === 'admin'){
         const user = new User({
             firstName: newUser.firstName,
@@ -139,11 +136,6 @@ router.post("/create-user", async(req, res, next) => {
                     username: newUser.username,
                     email: newUser.email,
                     password: newUser.password,
-
-                    // below 3 fileds are added 
-                    googleAuth : newUser.googleAuth,
-                    stateProvince: newUser.stateProvince,
-                    school : newUser.school,
                     institution: {
                         admin: false,
                         code:"NO-INSTITUTION",
@@ -157,8 +149,6 @@ router.post("/create-user", async(req, res, next) => {
         return next(error);
     }
 });
-
-
 router.post('/login-user', async(req, res, next) => {
     try {
         const loginUser = req.body;
@@ -178,8 +168,6 @@ router.post('/login-user', async(req, res, next) => {
         return next(error);
     }
 });
-
-
 router.get(
     '/logout-user',
     (req, res) => {
@@ -503,6 +491,37 @@ router.post('/update-institution-code', async (req, res, next) => {
         console.log("Error caught in update-institution-code route:", error);
 
         return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
+router.post('/update-only-institution-code', async (req, res) => {
+    try {
+        console.log("Request body:", req.body);
+
+        const { _id, code } = req.body;
+
+        // Find the user by their ID
+        const user = await User.findById(_id);
+
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        // Update the user's institution code
+        user.institution.code = code;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Institution code updated successfully',
+            user: user,
+        });
+    } catch (error) {
+        console.error("Error updating institution code:", error);
+        res.status(400).json({
             success: false,
             error: error.message,
         });

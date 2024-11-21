@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Login from '../../../lotus/src/app/(auth)/signin';
+import Login from '../../../frontend/src/Pages/newPages/registration/Login';
 
 const userAuth = () => {
   const [user, setUser] = useState(null);

@@ -9,6 +9,8 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageUrl:{type:String,
+  },
   courseStarted:{
     type:Boolean,
     default:false,

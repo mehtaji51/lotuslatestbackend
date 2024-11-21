@@ -31,6 +31,7 @@ const enrollmentSchema = new mongoose.Schema(
       default: 0, 
       required: true,
     },
+    visible: { type: Boolean, default: true },
 
     lessonGrades: [
       {

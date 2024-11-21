@@ -29,20 +29,19 @@ const userSchema = new mongoose.Schema({
       type: String,
     }
   },
-  // enrolledCourses: [
-  // {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Enrollment',
-  // }, ],
-  // createdCourses: [{
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Course',
-  // }, ],
-  // accomplishments: [{
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Accomplishment',
-  // }, ],
-  
+  enrolledCourses: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Enrollment',
+  }, ],
+  createdCourses: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+  }, ],
+  accomplishments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Accomplishment',
+  }, ],
   passwordResetOTP: {
       otp: { type: String },
       expiresAt: { type: Date }

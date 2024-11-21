@@ -5,7 +5,7 @@ const decompressData = (compressedData) => {
     const compressedDataArray = Object.values(compressedData);
     const compressedBuffer = Buffer.from(compressedDataArray);
 
-    // Retorna una nueva promesa que envuelve la llamada a zlib.gunzip
+
     return new Promise((resolve, reject) => {
         zlib.gunzip(compressedBuffer, (err, decompressedBuffer) => {
             if (err) {
@@ -13,12 +13,18 @@ const decompressData = (compressedData) => {
                 reject(err); 
             } else {
                 const decompressedString = decompressedBuffer.toString();
-                const jsonData = JSON.parse(decompressedString);
-                resolve(jsonData);
+                console.log("Decompressed String:", decompressedString);
+
+                try {
+                    const jsonData = JSON.parse(decompressedString);
+                    resolve(jsonData);
+                } catch (parseError) {
+                    console.error("Error parsing JSON:", parseError);
+                    reject(parseError);
+                }
             }
         });
     });
 };
 
-// Exporta la función decompressData
 module.exports = decompressData;
