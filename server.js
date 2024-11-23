@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:8081','http://localhost:5000',"*",'https://0be5-142-126-97-217.ngrok-free.app'],
   credentials: true,
 };
 
